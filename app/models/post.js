@@ -10,7 +10,7 @@ const commentSchema = new Schema({
     type: String,
     required: true
   },
-  owner:{
+  owner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
@@ -29,7 +29,7 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
-  owner:{
+  owner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
