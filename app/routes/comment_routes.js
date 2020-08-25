@@ -27,7 +27,6 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-
 // CREATE
 // POST /examples
 router.post('/posts/:id/comments', requireToken, (req, res, next) => {
@@ -89,8 +88,7 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
       // throw an error if current user doesn't own `example`
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
-      post.comments.deleteOne(commentId)
-
+      post.update({}, {$pull: {'comments': {'_id': commentId}}})
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))

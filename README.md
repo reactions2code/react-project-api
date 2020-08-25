@@ -43,14 +43,14 @@ This application allows signed in users to post text and images of various topic
 
 ### Catalog of Routes
 
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| GET    |                        |                   |
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password/` | `users#changepw`  |
-| DELETE | `/sign-out/`        | `users#signout`   |
-|GET      | /resources         |                    |
+| Verb   | URI Pattern            |
+|--------|------------------------|
+| GET    |                        |
+| POST   | `/comments`             |
+| POST   | `/sign-in`             |
+| PATCH  | `/change-password/` |
+| DELETE | `/sign-out/`        |
+|GET      | /resources         |
 |GET      | /resources/:id|   | |
 |POST     | /resources| |  |
 |PATCH    | /resources/:id| |   |
