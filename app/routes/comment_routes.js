@@ -61,6 +61,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   Post.findById(postId)
     .then(post => {
       post.comments.id(commentId).updateOne(commentUpdate.content)
+      // post.comment.update({}, {$set: {'comments': commentUpdate}})
       return post.save()
     })
     .then(handle404)
@@ -89,12 +90,12 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
       // throw an error if current user doesn't own `example`
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
-      post.comments.deleteOne(commentId)
-
+      // post.comments.deleteOne(commentId)
+      post.update({}, {$pull: {'comments': {'_id': commentId}}})
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
-    // if an error occurs, pass it to the handler
+    // if an error occurs, pass it to postthe handler
     .catch(next)
 })
 
