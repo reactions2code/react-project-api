@@ -67,9 +67,9 @@ Entity Relationship Diagrams, along with wireframes, allowed us to get a better 
 ## Images
 
 #### Wireframe:
-[wireframe](https://lucidchart.zendesk.com/hc/article_attachments/360001080866/Facebook_Wireframe_-_New_Page.png)
+<a href="https://imgur.com/td2RI7F"><img src="https://i.imgur.com/td2RI7F.png" title="source: imgur.com" /></a>
 
 ---
 
 #### ERD:
-[ERD](https://i.imgur.com/EQVqFoy.png)
+<a href="https://imgur.com/EQVqFoy"><img src="https://i.imgur.com/EQVqFoy.png" title="source: imgur.com" /></a>
