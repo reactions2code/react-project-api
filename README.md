@@ -4,6 +4,8 @@ This application allows signed in users to post text and images of various topic
 
 ## Planning Story
 
+When we first collaborated on what we wanted our team project to be, we had a handful of ideas. After reviewing and debating on what to build, we settled on a message board application. It started off with us creating a few user stories, then we outlined the overall feel that we wanted to achieve. Once we were settled on that aspect of the project, we moved onto how we were going to accomplish these tasks.  But before we could start diving into the frame work we needed to figure out what the design and layout was going to look like, since this was going to be a big factor in the initial setup of the application.
+Entity Relationship Diagrams, along with wireframes, allowed us to get a better understanding of what we needed to facilitate this. After all that was finalized we moved onto the Project management setup.  This included a Gantt chart to help with organizing the project into smaller, more manageable tasks. Then we were ready to start coding.
 
 ## Important Links
 
@@ -40,21 +42,20 @@ This application allows signed in users to post text and images of various topic
 - Javascript
 - React
 - React Router
+- PHP
 
 ### Catalog of Routes
 
 | Verb   | URI Pattern            |
 |--------|------------------------|
-| GET    |                        |
-| POST   | `/comments`             |
-| POST   | `/sign-in`             |
-| PATCH  | `/change-password/` |
-| DELETE | `/sign-out/`        |
-|GET      | /resources         |
-|GET      | /resources/:id|   | |
-|POST     | /resources| |  |
-|PATCH    | /resources/:id| |   |
-|DELETE  | /resources/:id| |  |
+| POST   | `/posts/:id/comments`  |
+| PATCH  | `/posts/:id/comments/:commentid` |
+| DELETE | `/posts/:id/comments/:commentid` |
+| GET      | `/posts`        |
+| GET      | `/posts/:id`|
+| POST     | `/posts`|
+| PATCH    | `/posts/:id`|
+| DELETE  | `/posts/:id`|
 
 
 
@@ -66,9 +67,9 @@ This application allows signed in users to post text and images of various topic
 ## Images
 
 #### Wireframe:
-![wireframe](https://lucidchart.zendesk.com/hc/article_attachments/360001080866/Facebook_Wireframe_-_New_Page.png)
+[wireframe](https://lucidchart.zendesk.com/hc/article_attachments/360001080866/Facebook_Wireframe_-_New_Page.png)
 
 ---
 
 #### ERD:
-![ERD](https://www.smartdraw.com/entity-relationship-diagram/img/cardinality.jpg?bn=1510011144)
+[ERD](https://i.imgur.com/EQVqFoy.png)

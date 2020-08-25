@@ -58,18 +58,20 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   const postId = req.params.id
   const commentUpdate = req.body.comment
   Post.findById(postId)
-    .then(post => {
-      post.comments.id(commentId).updateOne(commentUpdate.content)
-      return post.save()
-    })
     .then(handle404)
+    .then(post => {
+      post.comments.id(commentId).findOneAndUpdate(commentUpdate.content)
+      // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
+      post.save()
+      return post
+    })
     .then(post => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return post.updateOne(req.body.comment)
+      return post.findOneAndUpdate(req.body.comment)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
