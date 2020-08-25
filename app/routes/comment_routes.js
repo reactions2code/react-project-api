@@ -84,16 +84,13 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
   const postId = req.params.id
   const commentId = req.params.commentId
   Post.findById(postId)
-    .then(post => {
-      post.comments.deleteOne(commentId)
-      return post.save()
-    })
     .then(handle404)
     .then(post => {
       // throw an error if current user doesn't own `example`
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
-      post.deleteOne()
+      post.comments.deleteOne(commentId)
+
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
