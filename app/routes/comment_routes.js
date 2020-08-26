@@ -51,7 +51,7 @@ router.post('/posts/:id/comments', requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /examples/5a7db6c74d55bc51bdf39793
-router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/posts/:id/comments/:commentId', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.comment.owner
@@ -60,8 +60,11 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   const commentUpdate = req.body.comment
   Post.findById(postId)
     .then(post => {
-      post.comments.id(commentId).updateOne(commentUpdate.content)
+      console.log(commentId)
+      console.log(post.comments)
+      const com = post.comments.id(commentId)
       // post.comment.update({}, {$set: {'comments': commentUpdate}})
+      com.content = commentUpdate.content
       return post.save()
     })
     .then(handle404)
