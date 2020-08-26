@@ -27,7 +27,6 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-
 // CREATE
 // POST /examples
 router.post('/posts/:id/comments', requireToken, (req, res, next) => {
@@ -55,10 +54,12 @@ router.patch('/posts/:id/comments/:commentId', requireToken, removeBlanks, (req,
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.comment.owner
-  const commentId = req.params.commentId
+  const commentId = req.params.commentid
   const postId = req.params.id
-  const commentUpdate = req.body.comment
+  const commentUpdate = req.body.comment.content
+  console.log(commentId)
   Post.findById(postId)
+    .then(handle404)
     .then(post => {
       console.log(commentId)
       console.log(post.comments)
@@ -67,14 +68,13 @@ router.patch('/posts/:id/comments/:commentId', requireToken, removeBlanks, (req,
       com.content = commentUpdate.content
       return post.save()
     })
-    .then(handle404)
     .then(post => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return post.updateOne(req.body.comment)
+      post.comments.id(commentId).content = commentUpdate
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
