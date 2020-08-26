@@ -54,13 +54,14 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.comment.owner
-  const commentId = req.params.commentId
+  const commentId = req.params.commentid
   const postId = req.params.id
   const commentUpdate = req.body.comment.content
+  console.log(commentId)
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      post.comments.id(commentId).update({ comment: { content: commentUpdate } })
+      post.comments.id(commentId).content = commentUpdate
       // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
       post.save()
       return post
@@ -71,7 +72,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return post.findOneAndUpdate(req.body.comment)
+      return post.comments.id(commentId).content = commentUpdate
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
