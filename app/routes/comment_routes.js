@@ -99,4 +99,20 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
     .catch(next)
 })
 
+// INDEX
+router.get('/posts/:id/comments', requireToken, (req, res, next) => {
+  const postId = req.params.id
+  Post.findById(postId)
+    .then(post => {
+      // `examples` will be an array of Mongoose documents
+      // we want to convert each one to a POJO, so we use `.map` to
+      // apply `.toObject` to each one
+      return post.comments.map(comments => comments.toObject())
+    })
+    // respond with status 200 and JSON of the examples
+    .then(post => res.status(200).json({ post: post }))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
+
 module.exports = router
