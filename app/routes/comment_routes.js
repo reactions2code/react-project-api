@@ -56,11 +56,11 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   delete req.body.comment.owner
   const commentId = req.params.commentId
   const postId = req.params.id
-  const commentUpdate = req.body.comment
+  const commentUpdate = req.body.comment.content
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      post.comments.id(commentId).findOneAndUpdate(commentUpdate.content)
+      post.comments.id(commentId).update({ comment: { content: commentUpdate } })
       // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
       post.save()
       return post
