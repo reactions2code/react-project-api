@@ -61,10 +61,9 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      post.comments.id(commentId).content = commentUpdate
-      // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
-      post.save()
-      return post
+      post.comments.id(commentId).updateOne(commentUpdate.content)
+      // post.comment.update({}, {$set: {'comments': commentUpdate}})
+      return post.save()
     })
     .then(post => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
@@ -72,7 +71,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return post.comments.id(commentId).content = commentUpdate
+      post.comments.id(commentId).content = commentUpdate
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
@@ -91,11 +90,12 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
       // throw an error if current user doesn't own `example`
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
+      // post.comments.deleteOne(commentId)
       post.update({}, {$pull: {'comments': {'_id': commentId}}})
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
-    // if an error occurs, pass it to the handler
+    // if an error occurs, pass it to postthe handler
     .catch(next)
 })
 
