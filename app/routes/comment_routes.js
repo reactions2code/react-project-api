@@ -61,11 +61,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-<<<<<<< HEAD
       post.comments.id(commentId).content = commentUpdate
-=======
-      post.comments.id(commentId).findOneAndUpdate(commentUpdate.content)
->>>>>>> Added README file & co-authored by: Adane Nigus
       // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
       post.save()
       return post
@@ -76,11 +72,8 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-<<<<<<< HEAD
-      return post.comments.id(commentId).content = commentUpdate
-=======
-      return post.findOneAndUpdate(req.body.comment)
->>>>>>> Added README file & co-authored by: Adane Nigus
+      post.comments.id(commentId).content = commentUpdate
+      return post
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
