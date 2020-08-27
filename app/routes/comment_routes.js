@@ -64,7 +64,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
       // pass the result of Mongoose's `.update` to the next `.then`
-
+      requireOwnership(req, post)
       post.comments.id(commentId).content = commentUpdate
       return post.save()
     })
@@ -83,9 +83,8 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
     .then(handle404)
     .then(post => {
       // throw an error if current user doesn't own `example`
-
+      requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
-      // post.update({}, {$pull: {'comments': {'_id': commentId}}})
       post.comments.id(commentId).remove()
       return post.save()
     })
