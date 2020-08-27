@@ -95,6 +95,7 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
       post.update({}, {$pull: {'comments': {'_id': commentId}}})
+      return post
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
