@@ -11,7 +11,7 @@ Entity Relationship Diagrams, along with wireframes, allowed us to get a better 
 
 - [Deployed Client](https://reactions2code.github.io/react-project-client/)
 - [Client Repo](https://github.com/reactions2code/react-project-client)
-- [Deployed API](www.link.com)
+- [Deployed API](https://git.heroku.com/salty-cove-83012.git)
 
 
 ### User Stories
@@ -51,11 +51,11 @@ Entity Relationship Diagrams, along with wireframes, allowed us to get a better 
 | POST   | `/posts/:id/comments`  |
 | PATCH  | `/posts/:id/comments/:commentid` |
 | DELETE | `/posts/:id/comments/:commentid` |
-| GET      | `/posts`        |
-| GET      | `/posts/:id`|
-| POST     | `/posts`|
-| PATCH    | `/posts/:id`|
-| DELETE  | `/posts/:id`|
+| GET      | `/posts`            |
+| GET      | `/posts/:id`       |
+| POST     | `/posts`           |
+| PATCH    | `/posts/:id`       |
+| DELETE  | `/posts/:id`        |
 
 
 
