@@ -62,6 +62,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
     .then(handle404)
     .then(post => {
       post.comments.id(commentId).content = commentUpdate
+
       // post.update({}, {$set: {'comments': {'content': commentUpdate, '_id': commentId}}})
       post.save()
       return post
@@ -72,6 +73,7 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
       requireOwnership(req, post)
 
       // pass the result of Mongoose's `.update` to the next `.then`
+
       post.comments.id(commentId).content = commentUpdate
       return post
     })
@@ -93,6 +95,7 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
       requireOwnership(req, post)
       // delete the example ONLY IF the above didn't throw
       post.update({}, {$pull: {'comments': {'_id': commentId}}})
+      return post
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))
