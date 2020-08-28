@@ -61,8 +61,8 @@ Entity Relationship Diagrams, along with wireframes, allowed us to get a better 
 
 ### Unsolved Problems
 
-- Still need to ....
-- Would like to eventually ....
+- Still need to have the main page show all post to non authenticated users.
+- Would like to eventually add uploads of photos and links to the message boards.
 
 ## Images
 
