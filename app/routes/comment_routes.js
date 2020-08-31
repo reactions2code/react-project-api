@@ -60,7 +60,6 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
     .then(handle404)
     .then(post => {
       requireOwnershipComments(req, post)
-
       post.comments.id(commentId).content = commentUpdate
       return post.save()
     })
