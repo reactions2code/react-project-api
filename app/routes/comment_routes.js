@@ -14,7 +14,7 @@ const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 // we'll use this function to send 401 when a user tries to modify a resource
 // that's owned by someone else
-const requireOwnership = customErrors.requireOwnership
+const requireOwnershipComments = customErrors.requireOwnershipComments
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
@@ -26,6 +26,8 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
+
+
 
 // CREATE
 // POST /examples
@@ -60,11 +62,8 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      const owner = post.comments.id(commentId).owner
+      requireOwnershipComments(req, post)
 
-      if (!req.user._id.equals(owner)) {
-        throw new OwnershipError()
-      }
       post.comments.id(commentId).content = commentUpdate
       return post.save()
     })
@@ -82,11 +81,7 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      const owner = post.comments.id(commentId).owner
-
-      if (!req.user._id.equals(owner)) {
-        throw new OwnershipError()
-      }
+      requireOwnershipComments(req, post)
       post.comments.id(commentId).remove()
       return post.save()
     })
