@@ -14,7 +14,7 @@ const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 // we'll use this function to send 401 when a user tries to modify a resource
 // that's owned by someone else
-const requireOwnership = customErrors.requireOwnership
+const requireOwnershipComments = customErrors.requireOwnershipComments
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
@@ -26,6 +26,8 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
+
+
 
 // CREATE
 // POST /examples
@@ -57,14 +59,11 @@ router.patch('/posts/:id/comments/:commentid', requireToken, removeBlanks, (req,
   const commentId = req.params.commentid
   const postId = req.params.id
   const commentUpdate = req.body.comment.content
-  console.log(commentId)
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      // pass the `req` object and the Mongoose record to `requireOwnership`
-      // it will throw an error if the current user isn't the owner
-      // pass the result of Mongoose's `.update` to the next `.then`
-      requireOwnership(req, post)
+      requireOwnershipComments(req, post)
+
       post.comments.id(commentId).content = commentUpdate
       return post.save()
     })
@@ -82,9 +81,7 @@ router.delete('/posts/:id/comments/:commentid', requireToken, (req, res, next) =
   Post.findById(postId)
     .then(handle404)
     .then(post => {
-      // throw an error if current user doesn't own `example`
-      requireOwnership(req, post)
-      // delete the example ONLY IF the above didn't throw
+      requireOwnershipComments(req, post)
       post.comments.id(commentId).remove()
       return post.save()
     })
